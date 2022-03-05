@@ -1,6 +1,6 @@
 const fs = require('fs')
 var inquirer = require('inquirer')
-
+const homepageTemplate = require('./src/homepage')
 
 
 // questions to generate manager info
@@ -40,8 +40,8 @@ const managerQuestions =
         },
     ]
 
-// function to generate team member info
-    const teamMembers = [
+// array to generate team member info
+    const chooseTeam = [
 
         {
 
@@ -49,13 +49,77 @@ const managerQuestions =
             name: 'addTeam',
             message: 'Would you like to add additional Team Members',
             choices: ["Engineer", "Intern", "None"]
+            
         },
     
 
     ]
 
+    const addEngineer= [
+        {
+            type: 'input',
+            name: 'engineerName',
+            message: 'What is the members name',
+        },
+
+        {
+            type: 'input',
+            name: 'engineerId',
+            message: 'What is the members team ID?',
+        },
+        
+        {
+            type: 'input',
+            name: 'engineerUserName',
+            message: 'What is the members Github Username',
+        },
+
+        {
+            type: 'input',
+            name: 'engineerEmail',
+            message: 'What is the members email address',
+        },
+    ]
+
+    const addMember = [
+        {
+            type: 'input',
+            name: 'internName',
+            message: 'What is the members name',
+        },
+
+        {
+            type: 'input',
+            name: 'internId',
+            message: 'What is the members team ID?',
+        },
+        
+        {
+            type: 'input',
+            name: 'internSchool',
+            message: 'What is the members school?',
+        },
+
+        {
+            type: 'input',
+            name: 'internEmail',
+            message: 'What is the members email address',
+        },
+    ]
+
+    function writeToFile (answers)  {fs.writeFile('./dist/generated.html', homepageTemplate(answers), err => {
+        if (err) throw err;
+          console.log(' Generator complete');
+       });
+      }
+
 function init() {
     inquirer.prompt(managerQuestions)
+
+    .then((answers)=>{
+        homepageTemplate(answers)
+        writeToFile(answers)
+    })
 }
 
 init()
