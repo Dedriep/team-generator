@@ -114,12 +114,24 @@ const managerQuestions =
       }
 
 function init() {
-    inquirer.prompt(managerQuestions)
+    //inquirer.prompt(managerQuestions)
+    inquirer.prompt(chooseTeam) 
+        if ('addTeam'=== 'Engineer') {
+            return inquirer.prompt(addEngineer),
+            inquirer.prompt(chooseTeam) 
+        } else if ('addTeam'=== 'Intern'){
+            return inquirer.prompt(addMember) 
+        } else {
+            return ''
+        }
+    
 
-    .then((answers)=>{
-        homepageTemplate(answers)
-        writeToFile(answers)
-    })
+
+
+    // .then((answers)=>{
+    //     homepageTemplate(answers)
+    //     writeToFile(answers)
+    // })
 }
 
 init()
