@@ -52,7 +52,14 @@ const managerQuestions = () => {
             choices: ["Engineer", "Intern", "None"]
             
         })
-        
+        .then(response => {
+            if(response.choices == "Engineer") {
+                addEngineer
+            }else if (response.choices == "Intern") {
+                addIntern
+            }else {
+            }
+        })
         
     }
     
@@ -117,15 +124,8 @@ const managerQuestions = () => {
 
 function init () {
 managerQuestions ()
-// .then(chooseTeam())  
-// .then(response => {
-//     if(response.choice == "Engineer") {
-//         addEngineer()
-//     }else if (response.choice == "Intern") {
-//         addIntern()
-//     }else {
-//     }
-// })
+.then(chooseTeam)  
+
 .then((response)=>{
     homepageTemplate(response)
     writeToFile(response)
