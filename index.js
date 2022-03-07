@@ -39,6 +39,10 @@ const managerQuestions = () => {
             message: 'What is the Team Managers Employee ID?',
         },
     ])
+    .then((response)=>{
+        homepageTemplate(response)
+        writeToFile(response)
+    })
 }
 
 // array to generate team member info
@@ -51,10 +55,14 @@ const managerQuestions = () => {
             choices: ["Engineer", "Intern", "None"]
             
         })
-        if (chooseTeam === 'Engineer') {
-            return addEngineer
-        }
-
+        .then(response => {
+            if(response.choice == "Engineer") {
+                addEnineer()
+            }else if (response.choice == "Intern") {
+                addIntern()
+            }else {
+            }
+        })
         
     }
     
@@ -89,7 +97,7 @@ const managerQuestions = () => {
     ])
 }
 
-    const addMember = () => {
+    const addIntern = () => {
     return inquirer.prompt([
         {
             type: 'input',
@@ -120,16 +128,10 @@ const managerQuestions = () => {
   
  function init() {
 managerQuestions ()
-.then(chooseTeam) 
-    
-        if ('addTeam'=== 'Engineer') {
-            return inquirer.prompt(addEngineer)
-            //inquirer.prompt(chooseTeam) 
-        } else if ('addTeam'=== 'Intern'){
-            return inquirer.prompt(addMember) 
-        } else {
-            return ''
-        }
+
+.then(chooseTeam())   
+
+ }
 
 //     .then((answers)=>{
 //         homepageTemplate(answers)
@@ -137,13 +139,22 @@ managerQuestions ()
 //     })
 
    
-}
 
   // function writeToFile (answers)  {fs.writeFile('./dist/generated.html', homepageTemplate(answers), err => {
     //     if (err) throw err;
     //       console.log(' Generator complete');
     //    });
     //   }
+
+
+    // .then(response => {
+    //     if(response.choice == "Engineer") {
+    //         addEnineer()
+    //     }else if (response.choice == "Intern") {
+    //         addIntern()
+    //     }else {
+            
+    //     }
 
 
 init()
