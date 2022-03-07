@@ -52,10 +52,10 @@ const managerQuestions = () => {
             choices: ["Engineer", "Intern", "None"]
             
         })
-        .then(response => {
-            if(response.choices == "Engineer") {
+        .then(data => {
+            if(data.choices == "Engineer") {
                 addEngineer
-            }else if (response.choices == "Intern") {
+            }else if (data.choices == "Intern") {
                 addIntern
             }else {
             }
@@ -124,11 +124,16 @@ const managerQuestions = () => {
 
 function init () {
 managerQuestions ()
+.then((data)=>{
+    homepageTemplate(data)
+    writeToFile(data)
+})
+
 .then(chooseTeam)  
 
-.then((response)=>{
-    homepageTemplate(response)
-    writeToFile(response)
+.then((data)=>{
+    homepageTemplate(data)
+    writeToFile(data)
 })
 
 }
@@ -137,7 +142,7 @@ managerQuestions ()
 
    
 
-  function writeToFile (answers)  {fs.writeFile('./dist/generated.html', homepageTemplate(answers), err => {
+  function writeToFile (data)  {fs.writeFile('./dist/generated.html', homepageTemplate(data), err => {
         if (err) throw err;
           console.log(' Generator complete');
        });
