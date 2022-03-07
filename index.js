@@ -4,8 +4,8 @@ const homepageTemplate = require('./src/homepage')
 
 
 // questions to generate manager info
-const managerQuestions =
-    [
+const managerQuestions = () => {
+    return inquirer.prompt ([
         {
 
             type: 'input',
@@ -38,24 +38,31 @@ const managerQuestions =
             name: 'employeeId',
             message: 'What is the Team Managers Employee ID?',
         },
-    ]
+    ])
+}
 
 // array to generate team member info
-    const chooseTeam = [
-
-        {
+    const chooseTeam = () => {
+        return inquirer.prompt ( {
 
             type: 'list',
             name: 'addTeam',
             message: 'Would you like to add additional Team Members',
             choices: ["Engineer", "Intern", "None"]
             
-        },
+        })
+        if (chooseTeam === 'Engineer') {
+            return addEngineer
+        }
+
+        
+    }
     
 
-    ]
+    
 
-    const addEngineer= [
+    const addEngineer= () => {
+        return inquirer.prompt ([
         {
             type: 'input',
             name: 'engineerName',
@@ -79,9 +86,11 @@ const managerQuestions =
             name: 'engineerEmail',
             message: 'What is the members email address',
         },
-    ]
+    ])
+}
 
-    const addMember = [
+    const addMember = () => {
+    return inquirer.prompt([
         {
             type: 'input',
             name: 'internName',
@@ -105,33 +114,36 @@ const managerQuestions =
             name: 'internEmail',
             message: 'What is the members email address',
         },
-    ]
+    ])
+}
 
-    function writeToFile (answers)  {fs.writeFile('./dist/generated.html', homepageTemplate(answers), err => {
-        if (err) throw err;
-          console.log(' Generator complete');
-       });
-      }
-
-function init() {
-    //inquirer.prompt(managerQuestions)
-    inquirer.prompt(chooseTeam) 
+  
+ function init() {
+managerQuestions ()
+.then(chooseTeam) 
+    
         if ('addTeam'=== 'Engineer') {
-            return inquirer.prompt(addEngineer),
-            inquirer.prompt(chooseTeam) 
+            return inquirer.prompt(addEngineer)
+            //inquirer.prompt(chooseTeam) 
         } else if ('addTeam'=== 'Intern'){
             return inquirer.prompt(addMember) 
         } else {
             return ''
         }
-    
 
+//     .then((answers)=>{
+//         homepageTemplate(answers)
+//         writeToFile(answers)
+//     })
 
-
-    // .then((answers)=>{
-    //     homepageTemplate(answers)
-    //     writeToFile(answers)
-    // })
+   
 }
+
+  // function writeToFile (answers)  {fs.writeFile('./dist/generated.html', homepageTemplate(answers), err => {
+    //     if (err) throw err;
+    //       console.log(' Generator complete');
+    //    });
+    //   }
+
 
 init()
