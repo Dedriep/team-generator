@@ -39,10 +39,7 @@ const managerQuestions = () => {
             message: 'What is the Team Managers Employee ID?',
         },
     ])
-    .then((response)=>{
-        homepageTemplate(response)
-        writeToFile(response)
-    })
+    
 }
 
 // array to generate team member info
@@ -55,14 +52,7 @@ const managerQuestions = () => {
             choices: ["Engineer", "Intern", "None"]
             
         })
-        .then(response => {
-            if(response.choice == "Engineer") {
-                addEnineer()
-            }else if (response.choice == "Intern") {
-                addIntern()
-            }else {
-            }
-        })
+        
         
     }
     
@@ -125,36 +115,35 @@ const managerQuestions = () => {
     ])
 }
 
-  
- function init() {
+function init () {
 managerQuestions ()
+// .then(chooseTeam())  
+// .then(response => {
+//     if(response.choice == "Engineer") {
+//         addEngineer()
+//     }else if (response.choice == "Intern") {
+//         addIntern()
+//     }else {
+//     }
+// })
+.then((response)=>{
+    homepageTemplate(response)
+    writeToFile(response)
+})
 
-.then(chooseTeam())   
+}
 
- }
 
-//     .then((answers)=>{
-//         homepageTemplate(answers)
-//         writeToFile(answers)
-//     })
 
    
 
-  // function writeToFile (answers)  {fs.writeFile('./dist/generated.html', homepageTemplate(answers), err => {
-    //     if (err) throw err;
-    //       console.log(' Generator complete');
-    //    });
-    //   }
+  function writeToFile (answers)  {fs.writeFile('./dist/generated.html', homepageTemplate(answers), err => {
+        if (err) throw err;
+          console.log(' Generator complete');
+       });
+      }
 
 
-    // .then(response => {
-    //     if(response.choice == "Engineer") {
-    //         addEnineer()
-    //     }else if (response.choice == "Intern") {
-    //         addIntern()
-    //     }else {
-            
-    //     }
 
 
 init()
